@@ -15,7 +15,6 @@ async function wrapErrors(fn) {
     }
 }
 
-// GET /memes/
 router.get("/", async function (req, res, next) {
     // get function defines response
     await wrapErrors(async () => {
@@ -23,6 +22,12 @@ router.get("/", async function (req, res, next) {
         // await automatically colors the function and upper functions as async
         res.json(await users.getAllUsers()) // response exists and we append to it
         // we NEED await/async anytime we go outside the language runtime (database, filesystem, other servers)
+    })
+})
+
+router.get("/:username", async function (req, res, next) {
+    await wrapErrors(async () => {
+        res.json(await users.getUser(req.params.username))
     })
 })
 
