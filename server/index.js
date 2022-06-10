@@ -3,6 +3,7 @@ const app = express()
 const port = 3001
 const memesRouter = require("./routes/memes")
 const usersRouter = require("./routes/users")
+const path = require("path")
 
 // request is shape as {}
 
@@ -13,7 +14,7 @@ app.use(
     })
 )
 app.get("/", (req, res) => {
-    res.json({ message: "ok" })
+    res.sendFile(path.join(__dirname, "/index.html"))
     console.log(req.route.path) // res is automatically returned to front end
 })
 
