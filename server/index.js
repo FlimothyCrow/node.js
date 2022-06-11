@@ -4,9 +4,10 @@ const port = 3001
 const memesRouter = require("./routes/memes")
 const usersRouter = require("./routes/users")
 const path = require("path")
+var cors = require("cors")
 
 // request is shape as {}
-
+app.use(cors())
 app.use(express.json())
 app.use(
     express.urlencoded({
