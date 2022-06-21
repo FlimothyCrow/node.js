@@ -16,8 +16,20 @@ async function getMultiple() {
     return helper.emptyOrRows(rows)
 }
 
+async function postMeme(filename) {
+    const result = await db.query(
+        `INSERT INTO memes 
+      (filename, title, user_id) 
+      VALUES (?, ?, ?)
+      `,
+        [filename, "test0", 1]
+    )
+    return result.insertId
+}
+
 module.exports = {
     getMultiple,
     getMeme,
-    upvoteMeme
+    upvoteMeme,
+    postMeme,
 }

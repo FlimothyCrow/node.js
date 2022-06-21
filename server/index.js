@@ -3,21 +3,23 @@ const app = express()
 const port = 3001
 const memesRouter = require("./routes/memes")
 const usersRouter = require("./routes/users")
+const fileUpload = require("express-fileupload")
 const path = require("path")
 var cors = require("cors")
 
 // request is shape as {}
 app.use(cors())
+app.use(fileUpload())
 app.use(express.json())
 app.use(
     express.urlencoded({
         extended: true,
     })
 )
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "/index.html"))
-    console.log(req.route.path) // res is automatically returned to front end
-})
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname, "/index.html"))
+//     console.log(req.route.path) // res is automatically returned to front end
+// })
 
 app.use("/memes", memesRouter) // use allows for async returns without setting await
 /* Error handler middleware */

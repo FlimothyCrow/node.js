@@ -2,12 +2,11 @@ const express = require("express")
 const router = express.Router()
 const memes = require("../services/memes")
 const path = require("path")
-
+const fileUpload = require("express-fileupload")
 
 /* 
   Router for /memes/ 
 */
-
 async function wrapErrors(next, fn) {
     try {
         await fn()
@@ -47,6 +46,23 @@ router.get("/upvote/:memeId", async function (req, res, next) {
         let memeId = req.params.memeId
         await memes.upvoteMeme(memeId)
         res.json(await memes.getMeme(memeId))
+    })
+})
+
+router.post("/meme", async (req, res) => {
+    if (req.files === null) {
+        return res.status(400).json({ msg: "No file uploaded!" })
+    }
+    console.log(req.files)
+    const file = req.files.file
+    file.mv(`${__dirname}/../img/memes/${file.name}`, async (err) => {
+        if (err) {
+            console.error(err)
+            return res.status(500).send(err)
+        }
+        let memeID = await memes.postMeme(file.name)
+        let meme = await memes.getMeme(memeID)
+        res.json(meme)
     })
 })
 
