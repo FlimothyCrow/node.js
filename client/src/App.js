@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import FileUpload from "./FileUpload"
 
 function App() {
     const [meme, setMeme] = React.useState({}) // setMeme sister function triggers re-render
@@ -22,8 +23,9 @@ function App() {
             <div>has {meme.upvotes} many updoots</div>{" "}
             <button type="button" onClick={() => updoot(meme.id)}>
                 Click for updoot
-            </button>
+            </button>{" "}
             <img src={"http://localhost:3001/memes/img/" + meme.id} alt="hello"></img>
+            <FileUpload />
         </div>
     )
 }
