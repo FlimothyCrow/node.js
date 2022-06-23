@@ -1,31 +1,27 @@
 import React, { useEffect } from "react"
 import FileUpload from "./FileUpload"
+import Meme from "./Meme"
+import "./App.css"
 
 function App() {
-    const [meme, setMeme] = React.useState({}) // setMeme sister function triggers re-render
+    const [memes, setMemes] = React.useState([]) // setMeme sister function triggers re-render
     const updoot = (memeID) => {
         fetch("http://localhost:3001/memes/upvote/" + memeID) // fetch pings outwards to API
             .then((result) => result.json())
-            .then((body) => setMeme(body))
+            .then((body) => setMemes(body))
     }
     useEffect(() => {
-        fetch("http://localhost:3001/memes/meme/" + "1") // fetch pings outwards to API
+        fetch("http://localhost:3001/memes/") // fetch pings outwards to API
             .then((result) => result.json())
-            .then((body) => setMeme(body))
+            .then((body) => setMemes(body))
     }, [])
-
-    console.log(meme)
+    console.log(memes)
     return (
         <div className="app">
-            <h1>filename is equal to {meme.filename}</h1>
-            <h2>the title of the meme is {meme.title}</h2>
-            <h3>thank you to op {meme.user_id}</h3>
-            <div>has {meme.upvotes} many updoots</div>{" "}
-            <button type="button" onClick={() => updoot(meme.id)}>
-                Click for updoot
-            </button>{" "}
-            <img src={"http://localhost:3001/memes/img/" + meme.id} alt="hello"></img>
-            <FileUpload />
+            {memes.map((memeObj) => {
+                return <Meme meme={memeObj} />
+            })}
+            {/* <FileUpload /> */}
         </div>
     )
 }

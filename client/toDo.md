@@ -1,0 +1,1 @@
+-   reconfigure router.get("/img/:memeId") to call from filename directly and skip getMeme
