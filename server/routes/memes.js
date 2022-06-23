@@ -33,10 +33,9 @@ router.get("/meme/:memeId", async function (req, res, next) {
     })
 })
 
-router.get("/img/:memeId", async function (req, res, next) {
+router.get("/img/:filename", async function (req, res, next) {
     await wrapErrors(next, async () => {
-        let memeToReturn = await memes.getMeme(req.params.memeId)
-        res.sendFile(path.join(__dirname, "..", "img", "memes", memeToReturn.filename))
+        res.sendFile(path.join(__dirname, "..", "img", "memes", req.params.filename))
     })
 })
 

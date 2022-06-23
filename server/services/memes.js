@@ -12,7 +12,13 @@ async function getMeme(memeId) {
 }
 
 async function getMultiple() {
-    const rows = await db.query(`SELECT * FROM memes;`)
+    const rows = await db.query(`SELECT -- ALWAYS ALIAS YOUR COLUMN NAMES
+    m.id, m.filename, m.title, m.upvotes, m.downvotes,
+    m.user_id,
+    u.name as op_username
+    FROM memes m -- you only need one FROM to start, and it "reaches out" to other tables
+    left join users u on u.id = m.user_id ;
+    `)
     return helper.emptyOrRows(rows)
 }
 
