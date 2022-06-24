@@ -10,7 +10,7 @@ const MemePage = () => {
     return (
         <div>
             {params.memeId}
-            <MemeCard updoot={sendUpdoot} memeId={params.memeId} />
+            <MemeCard sendUpdoot={sendUpdoot} memeId={params.memeId} />
             {/* render comments */}
             {/* render new comment form */}
         </div>

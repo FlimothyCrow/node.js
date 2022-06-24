@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import "./MemeCard.css"
 import Upvote from "./Upvote"
 
-const MemeCard = ({ memeId, updoot }) => {
+const MemeCard = ({ memeId, sendUpdoot }) => {
     const [meme, setMeme] = React.useState([]) // setMeme sister function triggers re-render
     useEffect(() => {
         fetch(`http://localhost:3001/memes/meme/${memeId}`) // fetch pings outwards to API
@@ -10,6 +10,7 @@ const MemeCard = ({ memeId, updoot }) => {
             .then((body) => setMeme(body))
     }, {})
     // it has to be named props
+    console.log(meme)
     return (
         <div className="memeCard">
             <h1 className="memeText">{meme.title}</h1>
@@ -17,10 +18,15 @@ const MemeCard = ({ memeId, updoot }) => {
                 <img className="memeImg" src={"http://localhost:3001/memes/img/" + meme.filename} alt="hello"></img>
             </div>
             <h3 className="memeText">posted by {meme.op_username}</h3>
-            <Upvote updoot={updoot} meme={meme} />
+            <Upvote sendUpdoot={sendUpdoot} meme={meme} />
         </div>
     )
 }
+
+// onclick key: updoot += 1 && sendUpdoot(memeId)
+// sendUpdoot(memeId) doesn't return anything from that API
+// Upvote.js currently calls sendUpdoot(memeId) successfully updating database
+// it needs to modify the meme object, send it back to MemeCard, then call setMeme(newMemeObj)
 
 export default MemeCard
 

@@ -4,5 +4,3 @@ export function sendUpdoot (memeId) {
         .then((result) => result.json())
 }
 
-// change updoot route to not return anything...? just don't use the return??
-// onclick key: updoot += 1 && sendUpdoot(memeId) 

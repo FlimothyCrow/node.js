@@ -1,13 +1,13 @@
 import React from "react"
 import "./MemeCard.css"
 
-const Upvote = ({ meme, updoot }) => {
+const Upvote = ({ meme, sendUpdoot }) => {
     // it has to be named props
     // we can "unpack" prop keys to call them directly, it doesn't have to contain the entire prop
     return (
         <div className="memeCard">
             <div className="memeText">
-                <button onClick={() => updoot(meme.id)}>things</button>
+                <button onClick={() => sendUpdoot(meme.id)}>things</button>
                 {meme.upvotes} updoots, {meme.downvotes} downdoots
             </div>
         </div>
