@@ -1,0 +1,21 @@
+.memeImg {
+    max-width: 90%;
+
+}
+
+.memeWrapper {
+    text-align: center;
+}
+
+.memeCard {
+    background: white;
+    border: solid;
+    margin: 10px 0 10px 0;
+    width: 800px;
+}
+
+.memeText {
+    padding-left: 30px;
+    background: red;
+}
+

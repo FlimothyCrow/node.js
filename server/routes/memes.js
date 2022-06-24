@@ -44,7 +44,7 @@ router.get("/upvote/:memeId", async function (req, res, next) {
     await wrapErrors(next, async () => {
         let memeId = req.params.memeId
         await memes.upvoteMeme(memeId)
-        res.json(await memes.getMeme(memeId))
+        res.json(await memes.getMultiple())
     })
 })
 
