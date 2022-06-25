@@ -1,24 +1,26 @@
-import React, { useEffect } from "react"
+import React from "react"
 import "./MemeCard.css"
 import Upvote from "./Upvote"
 
-const MemeCard = ({ memeId, sendUpdoot }) => {
-    const [meme, setMeme] = React.useState([]) // setMeme sister function triggers re-render
-    useEffect(() => {
-        fetch(`http://localhost:3001/memes/meme/${memeId}`) // fetch pings outwards to API
-            .then((result) => result.json())
-            .then((body) => setMeme(body))
-    }, {})
+const MemeCard = ({ meme, sendUpdoot }) => {
     // it has to be named props
-    console.log(meme)
+
     return (
         <div className="memeCard">
-            <h1 className="memeText">{meme.title}</h1>
-            <div className="memeWrapper">
-                <img className="memeImg" src={"http://localhost:3001/memes/img/" + meme.filename} alt="hello"></img>
-            </div>
-            <h3 className="memeText">posted by {meme.op_username}</h3>
-            <Upvote sendUpdoot={sendUpdoot} meme={meme} />
+            {meme && (
+                <>
+                    <h1 className="memeText">{meme.title}</h1>
+                    <div className="memeWrapper">
+                        <img
+                            className="memeImg"
+                            src={"http://localhost:3001/memes/img/" + meme.filename}
+                            alt="hello"
+                        ></img>
+                    </div>
+                    <h3 className="memeText">posted by {meme.op_username}</h3>
+                    <Upvote sendUpdoot={sendUpdoot} meme={meme} />
+                </>
+            )}
         </div>
     )
 }

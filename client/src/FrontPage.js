@@ -17,8 +17,8 @@ function FrontPage() {
     console.log(memes)
     return (
         <div className="app">
-            {memes.map((memeObj) => {
-                return <MemeCard updoot={updoot} meme={memeObj} />
+            {memes.map((memeObj, idx) => {
+                return <MemeCard key={idx} updoot={updoot} meme={memeObj} />
             })}
             {/* <FileUpload /> */}
         </div>
