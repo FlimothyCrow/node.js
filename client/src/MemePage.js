@@ -13,7 +13,7 @@ const MemePage = () => {
         fetch(`http://localhost:3001/memes/meme/${params.memeId}`) // fetch pings outwards to API
             .then((result) => result.json())
             .then((body) => setMeme(body))
-    }, [])
+    }, [params.memeId])
 
     // updoot
     // fetch state for single meme

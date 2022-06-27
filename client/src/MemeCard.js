@@ -1,17 +1,28 @@
 import React from "react"
 import "./MemeCard.css"
 import Upvote from "./Upvote"
+import { useNavigate } from "react-router-dom"
 
 const MemeCard = ({ meme, handleUpdoot }) => {
     // it has to be named props
+
+    let navigate = useNavigate()
+
+    function handleClick(event) {
+        event.preventDefault() // prevents click from hitting multiple handlers
+        navigate(`/meme/${meme.id}`)
+    }
 
     return (
         <div className="memeCard">
             {meme && (
                 <>
-                    <h1 className="memeText">{meme.title}</h1>
+                    <h1 onClick={handleClick} className="memeText">
+                        {meme.title}
+                    </h1>
                     <div className="memeWrapper">
                         <img
+                            onClick={handleClick}
                             className="memeImg"
                             src={"http://localhost:3001/memes/img/" + meme.filename}
                             alt="hello"
