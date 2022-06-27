@@ -6,19 +6,18 @@ import "./FrontPage.css"
 
 function FrontPage() {
     const [memes, setMemes] = React.useState([]) // setMeme sister function triggers re-render
-    const updoot = (memeId) => {
-        sendUpdoot(memeId).then((body) => setMemes(body))
+    const handleUpdoot = (memeId) => {
+        sendUpdoot(memeId).then((body) => console.log(body))
     }
     useEffect(() => {
         fetch("http://localhost:3001/memes/") // fetch pings outwards to API
             .then((result) => result.json())
             .then((body) => setMemes(body))
     }, [])
-    console.log(memes)
     return (
         <div className="app">
             {memes.map((memeObj, idx) => {
-                return <MemeCard key={idx} updoot={updoot} meme={memeObj} />
+                return <MemeCard key={idx} handleUpdoot={handleUpdoot} meme={memeObj} />
             })}
             {/* <FileUpload /> */}
         </div>

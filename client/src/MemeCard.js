@@ -2,7 +2,7 @@ import React from "react"
 import "./MemeCard.css"
 import Upvote from "./Upvote"
 
-const MemeCard = ({ meme, sendUpdoot }) => {
+const MemeCard = ({ meme, handleUpdoot }) => {
     // it has to be named props
 
     return (
@@ -18,7 +18,7 @@ const MemeCard = ({ meme, sendUpdoot }) => {
                         ></img>
                     </div>
                     <h3 className="memeText">posted by {meme.op_username}</h3>
-                    <Upvote sendUpdoot={sendUpdoot} meme={meme} />
+                    <Upvote handleUpdoot={handleUpdoot} meme={meme} />
                 </>
             )}
         </div>
@@ -26,7 +26,7 @@ const MemeCard = ({ meme, sendUpdoot }) => {
 }
 
 // onclick key: updoot += 1 && sendUpdoot(memeId)
-// sendUpdoot(memeId) doesn't return anything from that API
+// handleUpdoot(memeId) doesn't return anything from that API
 // Upvote.js currently calls sendUpdoot(memeId) successfully updating database
 // it needs to modify the meme object, send it back to MemeCard, then call setMeme(newMemeObj)
 
