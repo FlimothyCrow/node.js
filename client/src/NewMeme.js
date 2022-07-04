@@ -1,8 +1,20 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-function FileUpload() {
+function NewMeme() {
     const [selectedFile, setSelectedFile] = useState()
     const [isSelected, setIsSelected] = useState(false)
+    const [showErrorMessage, setShowErrorMessage] = useState(false)
+    const [title, setTitle] = useState("")
+
+    let navigate = useNavigate()
+
+    const titleChangeHandler = (event) => {
+        let title = event.target.value
+        setTitle(title)
+        setShowErrorMessage(title.length < 4)
+        console.log("length " + title.length)
+    }
 
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0])
@@ -10,17 +22,23 @@ function FileUpload() {
     }
 
     const handleSubmission = () => {
+        if (showErrorMessage) {
+            console.log("nothing was posted, title too short")
+            return
+        }
         const formData = new FormData()
 
         formData.append("file", selectedFile)
+        formData.append("title", title)
 
         fetch("http://localhost:3000/memes/meme", {
             method: "POST",
             body: formData,
         })
-            .then((response) => response.json())
+            .then((response) => response.json()) // server response 
             .then((result) => {
                 console.log("Success:", result)
+                navigate(`/meme/${result.id}`)
             })
             .catch((error) => {
                 console.error("Error:", error)
@@ -40,6 +58,20 @@ function FileUpload() {
             ) : (
                 <p>Select a file to show details</p>
             )}
+            <>
+                {isSelected && (
+                    <p>
+                        Meme Title:
+                        <input type="text" onChange={titleChangeHandler} />
+                        {showErrorMessage && (
+                            <span style={{ color: "red" }}>
+                                Meme title is too short! {4 - title.length} characters remaining
+                            </span>
+                        )}
+                    </p>
+                )}
+            </>
+
             <div>
                 <button onClick={handleSubmission}>Submit</button>
             </div>
@@ -47,4 +79,4 @@ function FileUpload() {
     )
 }
 
-export default FileUpload
+export default NewMeme

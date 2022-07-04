@@ -3,7 +3,7 @@ const router = express.Router()
 const memes = require("../services/memes")
 const path = require("path")
 const fileUpload = require("express-fileupload")
-
+const { v4: uuidv4 } = require("uuid")
 /* 
   Router for /memes/ 
 */
@@ -52,14 +52,16 @@ router.post("/meme", async (req, res) => {
     if (req.files === null) {
         return res.status(400).json({ msg: "No file uploaded!" })
     }
-    console.log(req.files)
     const file = req.files.file
-    file.mv(`${__dirname}/../img/memes/${file.name}`, async (err) => {
+    const title = req.body.title
+    const uuidFileName = uuidv4()
+    console.log("Inserting Meme: " + title + " with filename: " + uuidFileName)
+    file.mv(`${__dirname}/../img/memes/${uuidFileName}`, async (err) => {
         if (err) {
             console.error(err)
             return res.status(500).send(err)
         }
-        let memeID = await memes.postMeme(file.name)
+        let memeID = await memes.postMeme(uuidFileName, title)
         let meme = await memes.getMeme(memeID)
         res.json(meme)
     })

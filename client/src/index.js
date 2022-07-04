@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import "./index.css"
 import FrontPage from "./FrontPage"
-import FileUpload from "./FileUpload"
+import NewMeme from "./NewMeme"
 import MemePage from "./MemePage"
 import reportWebVitals from "./reportWebVitals"
 import { Link, BrowserRouter, Routes, Route, Outlet } from "react-router-dom"
@@ -13,7 +13,7 @@ root.render(
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<FrontPage />} />
-                <Route path="new" element={<FileUpload />} />
+                <Route path="new" element={<NewMeme />} />
                 <Route path="meme/:memeId" element={<MemePage />} />
             </Route>
         </Routes>
@@ -21,13 +21,15 @@ root.render(
 )
 
 function Layout() {
+    const [userId, setUserId] = React.useState(1)
     return (
         <div>
             <nav>
                 <Link to="/">Front page</Link> | <Link to="new">New Meme</Link>
+                <input type="text" value={userId} onChange={(event) => setUserId(event.target.value)} />
             </nav>
             <div className="content">
-                <Outlet />
+                <Outlet context={[userId]} />
             </div>
         </div>
     )

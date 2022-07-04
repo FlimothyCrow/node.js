@@ -10,7 +10,7 @@ async function getMeme(memeId) {
     const rows = await db.query(`SELECT * FROM memes WHERE id = ${memeId};`)
     return rows.length === 1 ? rows[0] : {} // query returns an array
 }
-
+// never let the code modify the structure of the database
 async function getMultiple() {
     const rows = await db.query(`SELECT -- ALWAYS ALIAS YOUR COLUMN NAMES
     m.id, m.filename, m.title, m.upvotes, m.downvotes,
@@ -22,13 +22,13 @@ async function getMultiple() {
     return helper.emptyOrRows(rows)
 }
 
-async function postMeme(filename) {
+async function postMeme(filename, title) {
     const result = await db.query(
         `INSERT INTO memes 
       (filename, title, user_id) 
       VALUES (?, ?, ?)
       `,
-        [filename, "test0", 1]
+        [filename, title, 1]
     )
     return result.insertId
 }
