@@ -1,7 +1,9 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useOutletContext } from "react-router-dom"
 
 function NewMeme() {
+    const [userId] = useOutletContext()
     const [selectedFile, setSelectedFile] = useState()
     const [isSelected, setIsSelected] = useState(false)
     const [showErrorMessage, setShowErrorMessage] = useState(false)
@@ -30,12 +32,13 @@ function NewMeme() {
 
         formData.append("file", selectedFile)
         formData.append("title", title)
+        formData.append("user_id", userId)
 
         fetch("http://localhost:3000/memes/meme", {
             method: "POST",
             body: formData,
         })
-            .then((response) => response.json()) // server response 
+            .then((response) => response.json()) // server response
             .then((result) => {
                 console.log("Success:", result)
                 navigate(`/meme/${result.id}`)

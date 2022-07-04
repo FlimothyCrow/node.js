@@ -4,11 +4,8 @@ import MemeCard from "./MemeCard"
 import { replaceById } from "./helpers"
 import { sendUpdoot } from "./services"
 import "./FrontPage.css"
-import { useOutletContext } from "react-router-dom"
 
 function FrontPage() {
-    const [userId] = useOutletContext()
-
     const [memes, setMemes] = React.useState([]) // setMeme sister function triggers re-render
     const handleUpdoot = (memeId) => {
         sendUpdoot(memeId).then((body) => {

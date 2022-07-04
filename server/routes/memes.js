@@ -54,6 +54,8 @@ router.post("/meme", async (req, res) => {
     }
     const file = req.files.file
     const title = req.body.title
+    const user_id = req.body.user_id
+
     const uuidFileName = uuidv4()
     console.log("Inserting Meme: " + title + " with filename: " + uuidFileName)
     file.mv(`${__dirname}/../img/memes/${uuidFileName}`, async (err) => {
@@ -61,7 +63,7 @@ router.post("/meme", async (req, res) => {
             console.error(err)
             return res.status(500).send(err)
         }
-        let memeID = await memes.postMeme(uuidFileName, title)
+        let memeID = await memes.postMeme(uuidFileName, title, user_id)
         let meme = await memes.getMeme(memeID)
         res.json(meme)
     })
