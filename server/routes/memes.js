@@ -56,7 +56,7 @@ router.post("/meme", async (req, res) => {
     const title = req.body.title
     const user_id = req.body.user_id
 
-    const uuidFileName = uuidv4()
+    const uuidFileName = uuidv4() // setting to a variable will ensure both usages of uuidFileName are identical
     console.log("Inserting Meme: " + title + " with filename: " + uuidFileName)
     file.mv(`${__dirname}/../img/memes/${uuidFileName}`, async (err) => {
         if (err) {

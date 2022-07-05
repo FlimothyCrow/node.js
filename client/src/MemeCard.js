@@ -2,6 +2,7 @@ import React from "react"
 import "./MemeCard.css"
 import Upvote from "./Upvote"
 import { useNavigate } from "react-router-dom"
+import Comments from "./Comments"
 
 const MemeCard = ({ meme, handleUpdoot }) => {
     // it has to be named props
@@ -30,6 +31,7 @@ const MemeCard = ({ meme, handleUpdoot }) => {
                     </div>
                     <h3 className="memeText">posted by {meme.op_username}</h3>
                     <Upvote handleUpdoot={handleUpdoot} meme={meme} />
+                    <Comments meme_id={meme.id} />
                 </>
             )}
         </div>

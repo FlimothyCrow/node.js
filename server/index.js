@@ -3,6 +3,7 @@ const app = express()
 const port = 3001
 const memesRouter = require("./routes/memes")
 const usersRouter = require("./routes/users")
+const commentsRouter = require("./routes/comments")
 const fileUpload = require("express-fileupload")
 const path = require("path")
 var cors = require("cors")
@@ -20,6 +21,8 @@ app.use(
 //     res.sendFile(path.join(__dirname, "/index.html"))
 //     console.log(req.route.path) // res is automatically returned to front end
 // })
+
+app.use("/comments", commentsRouter)
 
 app.use("/memes", memesRouter) // use allows for async returns without setting await
 /* Error handler middleware */

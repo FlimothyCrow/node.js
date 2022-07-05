@@ -33,13 +33,13 @@ async function getMultiple() {
     return helper.emptyOrRows(rows)
 }
 
-async function postMeme(filename, title, user_id) {
+async function postComment(meme_id, user_id, textbody) {
     const result = await db.query(
-        `INSERT INTO memes 
-      (filename, title, user_id) 
+        `INSERT INTO comments 
+      (meme_id, user_id, textbody) 
       VALUES (?, ?, ?)
       `,
-        [filename, title, user_id]
+        [meme_id, user_id, textbody]
     )
     return result.insertId // database query returns primary key from the new meme row
 }
@@ -48,5 +48,5 @@ module.exports = {
     getMultiple,
     getMeme,
     upvoteMeme,
-    postMeme,
+    postComment,
 }
