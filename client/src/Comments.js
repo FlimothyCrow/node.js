@@ -21,3 +21,38 @@ const Comments = ({ meme_id }) => {
 }
 
 export default Comments
+/*
+  <FrontPage />
+        GET /memes/
+        POST /memes/upvote/{meme.id}
+        <MemeCard meme upvote comments={false} />[]
+            <Upvote upvote />
+
+  <MemePage />
+        GET /memes/meme/${params.memeId}
+        POST /memes/upvote/{meme.id}
+        <MemeCard meme upvote />
+            <Upvote upvote />
+            <Comments meme_id />
+                GET /comments/${meme_id}
+                POST /comments/delete/comment_id
+                POST /comments/edit/comment_id
+                <NewComment />
+                    POST /comments/comment
+
+  <MemePage />
+        GET /memes/meme/${params.memeId}
+        POST /memes/upvote/{meme.id}
+        GET /comments/${meme_id}
+        POST /comments/delete/comment_id
+        POST /comments/edit/comment_id
+        POST /comments/comment
+        <MemeCard meme upvote
+            <Upvote upvote />
+          >
+            <Comments upvoteComment deleteComment editComment comments />
+            <NewComment makeComment  />
+        </MemeCard>
+
+
+*/
