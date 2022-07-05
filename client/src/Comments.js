@@ -1,30 +1,21 @@
-import React, { useState } from "react"
-import { sendComment } from "./services"
-import { useOutletContext } from "react-router-dom"
+import React, { useEffect } from "react"
+import NewComment from "./NewComment";
 
 const Comments = ({ meme_id }) => {
-    const [comment, setComment] = useState("")
-    const [showErrorMessage, setShowErrorMessage] = useState(false)
-    const [userId] = useOutletContext()
+    const [comments, setComments] = React.useState([])
 
-    const commentChangeHandler = (event) => {
-        let title = event.target.value
-        setComment(title)
-    }
-
-    const sendCommentHandler = () => {
-        if (comment) {
-            sendComment(meme_id, userId, comment).then((body) => console.log(body))
-        } else {
-            setShowErrorMessage(true)
-        }
-    }
+    useEffect(() => {
+        fetch(`http://localhost:3001/comments/${meme_id}`) // fetch pings outwards to API
+            .then((result) => result.json())
+            .then((body) => setComments(body))
+    }, [meme_id])
 
     return (
         <div>
-            <button onClick={sendCommentHandler}>Send</button>
-            <input onChange={commentChangeHandler} type="text"></input>
-            {showErrorMessage && <span style={{color:"red"}}>no empty comments</span>}
+            <NewComment meme_id={meme_id} />
+            {comments.map((comment) => {
+                return <div key={comment.id}>{comment.textbody}</div>
+            })}
         </div>
     )
 }

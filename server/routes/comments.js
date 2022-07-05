@@ -30,4 +30,10 @@ router.post("/comment", async (req, res) => {
     res.json(commentId)
 })
 
+router.get("/:meme_id", async function (req, res, next) {
+    await wrapErrors(next, async () => {
+        res.json(await comments.getMultipleComments(req.params.meme_id)) // response exists and we append to it
+    })
+})
+
 module.exports = router
