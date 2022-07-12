@@ -10,7 +10,9 @@ async function getUser(username) {
     //const rows = await db.query(`SELECT * FROM users WHERE name = ?;`, [username]) // write join on user > memes
     const rows = await db.query(
         `SELECT 
-        m.id as meme_id, m.filename, m.title, m.upvotes, m.downvotes,
+        m.id as meme_id, m.filename, m.title, 
+        0 as upvotes,
+        0 as downvotes,
         m.user_id as op_user_id,
         u.name as op_username
         FROM memes m 
