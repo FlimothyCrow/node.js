@@ -1,4 +1,5 @@
 DROP TABLE memeVotes;
+DROP TABLE commentVotes;
 DROP TABLE comments;
 DROP TABLE memes;
 DROP TABLE users;
@@ -23,7 +24,8 @@ CREATE TABLE memeVotes ( -- doesn't need ID or primary key
     meme_id INT, 
     upvote BIT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (meme_id) REFERENCES memes (id)
+    FOREIGN KEY (meme_id) REFERENCES memes (id),
+    PRIMARY KEY(user_id, meme_id)
     );
     
 CREATE TABLE comments (
@@ -40,7 +42,8 @@ CREATE TABLE commentVotes ( -- doesn't need ID or primary key
     comment_id INT, 
     upvote BIT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (comment_id) REFERENCES comments (id)
+    FOREIGN KEY (comment_id) REFERENCES comments (id),
+    PRIMARY KEY(user_id, comment_id)
     );
 
 
@@ -55,6 +58,7 @@ INSERT INTO comments (meme_id, textbody, user_id) VALUES (4, 'repost loser', 3);
 INSERT INTO comments (meme_id, textbody, user_id) VALUES (3, 'go back to reddit', 2);
 INSERT into memeVotes (user_id, meme_id, upvote) VALUES (3, 2, 1);
 INSERT into memeVotes (user_id, meme_id, upvote) VALUES (2, 2, 1);
+INSERT into memeVotes (user_id, meme_id, upvote) VALUES (1, 2, 0);
 INSERT into commentVotes (user_id, comment_id, upvote) VALUES (2, 2, 1);
 INSERT into commentVotes (user_id, comment_id, upvote) VALUES (1, 2, 1);
 
@@ -85,6 +89,26 @@ FROM memes m
 LEFT JOIN memeVotes v ON m.id = v.meme_id
 LEFT JOIN users opUsers ON m.user_id = opUsers.id
 LEFT JOIN users upvoters ON v.user_id = upvoters.id;
+
+-- count, group by
+SELECT 
+	m.id as meme_id,
+	m.filename,
+    m.title,
+    m.post_date,
+    opUsers.name as op_name,
+    opUsers.id as op_id,
+    SUM(CASE v.upvote WHEN 1 THEN 1 ELSE 0 END) AS upvotes,
+    SUM(CASE v.upvote WHEN 0 THEN 1 ELSE 0 END) AS downvotes
+FROM memes m 
+LEFT JOIN memeVotes v ON m.id = v.meme_id
+LEFT JOIN users opUsers ON m.user_id = opUsers.id
+LEFT JOIN users upvoters ON v.user_id = upvoters.id
+-- WHERE m.id = 2
+GROUP BY (m.id) 
+;
+
+
 
 
 

@@ -39,11 +39,12 @@ router.get("/img/:filename", async function (req, res, next) {
     })
 })
 
-// GET /memes/upvote/:memeId
-router.get("/upvote/:memeId", async function (req, res, next) {
+// POST /memes/upvote/
+router.post("/upvote", async function (req, res, next) {
     await wrapErrors(next, async () => {
-        let memeId = req.params.memeId
-        await memes.upvoteMeme(memeId)
+        let memeId = req.body.memeId
+        let userId = req.body.userId
+        await memes.upvoteMeme(memeId, userId)
         res.json(await memes.getMeme(memeId))
     })
 })

@@ -7,7 +7,7 @@ const Upvote = ({ meme, handleUpdoot }) => {
     return (
         <div className="memeCard">
             <div className="memeText">
-                <button onClick={() => handleUpdoot(meme.id)}>things</button>
+                <button onClick={() => handleUpdoot(meme.id)}>Updoot</button>
                 {meme.upvotes} updoots, {meme.downvotes} downdoots
             </div>
         </div>
